@@ -35,7 +35,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `### projects/${PROJECT_ID} results
+            const output = `### results
             #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             <details><summary>Format Output</summary>
             \`\`\`\n
