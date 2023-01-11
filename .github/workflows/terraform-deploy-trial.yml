@@ -15,24 +15,20 @@ jobs:
       - name: Terraform Fmt Check
         id: fmt
         run: terraform fmt -check
-        working-directory: projects/${PROJECT_ID}
         continue-on-error: true
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: projects/${PROJECT_ID}
         env:
-          GOOGLE_CREDENTIALS: ${ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }
+          GOOGLE_CREDENTIALS: ${{ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }}
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: projects/${PROJECT_ID}
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-        working-directory: projects/${PROJECT_ID}
         env:
-          GOOGLE_CREDENTIALS: ${ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }
+          GOOGLE_CREDENTIALS: ${{ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }}
         continue-on-error: true
       - uses: actions/github-script@v5
         if: github.event_name == 'pull_request'
