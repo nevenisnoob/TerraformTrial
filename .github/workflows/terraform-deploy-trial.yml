@@ -1,0 +1,69 @@
+name: Terraform Deploy Trial
+on: [push, pull_request, pull_request_comment]
+env:
+  PROJECT_ID: terraformtrial-372802
+  CREDENTIAL: TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY
+jobs:
+  check_tf_files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - uses: hashicorp/setup-terraform@v2
+      - name: Terraform Fmt Check
+        id: fmt
+        run: terraform fmt -check
+        working-directory: projects/${PROJECT_ID}
+        continue-on-error: true
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: projects/${PROJECT_ID}
+        env:
+          GOOGLE_CREDENTIALS: ${ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: projects/${PROJECT_ID}
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        working-directory: projects/${PROJECT_ID}
+        env:
+          GOOGLE_CREDENTIALS: ${ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }
+        continue-on-error: true
+      - uses: actions/github-script@v5
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `### projects/${PROJECT_ID} results
+            #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            <details><summary>Format Output</summary>
+            \`\`\`\n
+            ${{ steps.fmt.outputs.stdout }}
+            \`\`\`
+            </details>
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            <details><summary>Validation Output</summary>
+            \`\`\`\n
+            ${{ steps.validate.outputs.stdout }}
+            \`\`\`
+            </details>
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            <details><summary>Show Plan</summary>
+            \`\`\`\n
+            ${{ steps.plan.outputs.stdout }}
+            \`\`\`
+            </details>
+            *Pusher: @${{ github.actor }}, Workflow: \`${{ github.workflow }}\`*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+        continue-on-error: true
