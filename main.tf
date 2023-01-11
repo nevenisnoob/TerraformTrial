@@ -6,6 +6,7 @@ terraform {
     }
   }
 
+
   backend "gcs" {
     bucket = "terraform_trial"
     prefix = "state" # any prefix is ok.
