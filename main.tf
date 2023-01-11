@@ -8,7 +8,7 @@ terraform {
 
 
   backend "gcs" {
-    bucket = "terraform_trial"
+    bucket = "storage-bucket1-terraform"
     prefix = "state" # any prefix is ok.
   }
 }
