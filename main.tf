@@ -14,8 +14,8 @@ terraform {
 }
 
 resource "google_project_iam_member" "terraform_trial_iam_sa" {
-   role    = "roles/owner"
-   member  = "serviceAccount:${google_service_account.terraform.email}"
+   role    = "roles/editor"
+   member  = "serviceAccount:key-rotation-test@terraformtrial-372802.iam.gserviceaccount.com"
  }
 
 resource "google_service_account" "terraform_trial_sa" {
