@@ -1,5 +1,5 @@
 name: Terraform Deploy Trial
-on: [push, pull_request, pull_request_comment]
+on: [push, pull_request]
 env:
   PROJECT_ID: terraformtrial-372802
   CREDENTIAL: TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY
