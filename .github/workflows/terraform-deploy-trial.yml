@@ -2,7 +2,6 @@ name: Terraform Deploy Trial
 on: [push]
 env:
   PROJECT_ID: terraformtrial-372802
-  CREDENTIAL: TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY
 jobs:
   check_tf_files:
     runs-on: ubuntu-latest
