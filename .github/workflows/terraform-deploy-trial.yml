@@ -29,6 +29,11 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }}
         continue-on-error: true
+      - name: terraform apply
+        id: apply
+        run: terraform apply -no-color -auto-approve
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.TERRAFORM_TRIAL_SERVICE_ACCOUNT_KEY }}
       - uses: actions/github-script@v5
         if: github.event_name == 'pull_request'
         with:
