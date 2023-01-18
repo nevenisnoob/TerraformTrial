@@ -25,6 +25,7 @@ resource "google_service_account" "workload_identity_federation" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool
 # 1. workload identity poolをまず作る必要があります
 resource "google_iam_workload_identity_pool" "github_wif_pool" {
+  provider                  = google-beta
   project                   = local.project_id
   workload_identity_pool_id = "github-actions"
   display_name              = "GitHub Actions Workload Identity Pool"
@@ -35,6 +36,7 @@ resource "google_iam_workload_identity_pool" "github_wif_pool" {
 # https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions?hl=en
 # 2. oned-way trust from external(GitHub) identity provider to Google's Workload Identity Pool
 resource "google_iam_workload_identity_pool_provider" "github" {
+  provider                           = google-beta
   project                            = local.project_id
   workload_identity_pool_id          = google_iam_workload_identity_pool.github_wif_pool.workload_identity_pool_id
   workload_identity_pool_provider_id = "github-actions-provider"
