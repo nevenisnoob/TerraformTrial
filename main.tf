@@ -19,7 +19,7 @@ module "gh_oidc" {
   provider_id = "example-gh-provider"
   sa_mapping = {
     "foo-service-account" = {
-      sa_name   = "projects/my-project/serviceAccounts/foo-service-account@${local.project_id}.iam.gserviceaccount.com"
+      sa_name   = "projects/my-project/serviceAccounts/key-rotation-test@${local.project_id}.iam.gserviceaccount.com"
       attribute = "attribute.repository/nevenisnoob/TerraformTrial"
     }
   }
