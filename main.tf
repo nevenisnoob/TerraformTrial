@@ -14,7 +14,6 @@ terraform {
 }
 
 
-
 resource "google_compute_instance" "default" {
   name         = "flask-vm2"
   machine_type = "f1-micro"
