@@ -51,7 +51,7 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 # https://github.com/terraform-google-modules/terraform-google-github-actions-runners/tree/master/modules/gh-oidc
 # https://github.com/terraform-google-modules/terraform-google-github-actions-runners/tree/master/examples/oidc-simple
 # 3.allow authentications from the Workload Identity Provider to impersonate the desired Service Account
-resource "google_service_account_iam_binding" "github-sa-wif-binding" {
+resource "google_service_account_iam_member" "github-sa-wif-binding" {
   service_account_id = google_service_account.workload_identity_federation.name
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_wif_pool.name}/attribute.repository/nevenisnoob/TerraformTrial"
