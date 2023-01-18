@@ -1,5 +1,6 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service
 
+
 resource "google_project_service" "default" {
   project = "terraformtrial-372802"
   # https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com?authuser=2&project=terraformtrial-372802
