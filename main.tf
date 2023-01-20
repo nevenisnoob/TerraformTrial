@@ -23,6 +23,7 @@ resource "google_service_account" "workload_identity_federation" {
 }
 
 resource "google_project_iam_member" "workload_identity_federation_sa" {
+  project = local.project_id
   role = "roles/iam.workloadIdentityPoolAdmin"
   member = "serviceAccount:${google_service_account.workload_identity_federation.email}"
 }
