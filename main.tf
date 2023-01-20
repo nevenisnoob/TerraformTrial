@@ -65,10 +65,3 @@ resource "google_service_account_iam_member" "github-sa-wif-binding" {
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_wif_pool.name}/attribute.repository/nevenisnoob/TerraformTrial"
 }
-
-
-resource "google_project_iam_member" "workload_identity_federation_sa" {
-  project = local.project_id
-  role = "roles/iam.workloadIdentityPoolAdmin"
-  member = "serviceAccount:key-rotation-test@terraformtrial-372802.iam.gserviceaccount.com"
-}
