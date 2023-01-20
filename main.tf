@@ -71,8 +71,8 @@ resource "google_service_account_iam_member" "github-sa-wif-binding" {
 # but with this, you would get the
 # Error applying IAM policy for project "terraformtrial-372802" Error setting IAM policy for project "terraformtrial-372802": googleapi: Error 403: Policy update access denied., forbidden
 # ref. https://stackoverflow.com/questions/65661144/getting-error-while-allowing-accounts-and-roles-in-terraform-for-gcp
-resource "google_project_iam_member" "workload_identity_federation_sa" {
-  project = local.project_id
-  role = "roles/iam.workloadIdentityPoolAdmin"
-  member = "serviceAccount:key-rotation-test@terraformtrial-372802.iam.gserviceaccount.com"
-}
+#resource "google_project_iam_member" "workload_identity_federation_sa" {
+#  project = local.project_id
+#  role = "roles/iam.workloadIdentityPoolAdmin"
+#  member = "serviceAccount:key-rotation-test@terraformtrial-372802.iam.gserviceaccount.com"
+#}
