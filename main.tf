@@ -34,6 +34,7 @@ resource "google_iam_workload_identity_pool" "github_wif_pool" {
   description               = "Workload Identity Pool for GitHub Actions"
 }
 
+
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool_provider
 # https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions?hl=en
 # 2. oned-way trust from external(GitHub) identity provider to Google's Workload Identity Pool
