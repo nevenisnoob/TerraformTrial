@@ -15,18 +15,14 @@ terraform {
 
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_service_account
 # 0. terraform用の service accountを作ります
-resource "google_service_account" "workload_identity_federation" {
-  project      = local.project_id
-  account_id   = "workload-identity-test"
-  display_name = "SA used by GitHub Actions with Workload Identity Federation"
-  description  = "link to Workload Identity Pool used by GitHub Actions"
-}
+#resource "google_service_account" "workload_identity_federation" {
+#  project      = local.project_id
+#  account_id   = "workload-identity-test"
+#  display_name = "SA used by GitHub Actions with Workload Identity Federation"
+#  description  = "link to Workload Identity Pool used by GitHub Actions"
+#}
 
-resource "google_project_iam_member" "workload_identity_federation_sa" {
-  project = local.project_id
-  role = "roles/iam.workloadIdentityPoolAdmin"
-  member = "serviceAccount:${google_service_account.workload_identity_federation.email}"
-}
+
 
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool
 # 1. workload identity poolをまず作る必要があります
@@ -65,7 +61,14 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 # https://github.com/terraform-google-modules/terraform-google-github-actions-runners/tree/master/examples/oidc-simple
 # 3.allow authentications from the Workload Identity Provider to impersonate the desired Service Account
 resource "google_service_account_iam_member" "github-sa-wif-binding" {
-  service_account_id = google_service_account.workload_identity_federation.name
+  service_account_id = 105430336450891082948
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_wif_pool.name}/attribute.repository/nevenisnoob/TerraformTrial"
+}
+
+
+resource "google_project_iam_member" "workload_identity_federation_sa" {
+  project = local.project_id
+  role = "roles/iam.workloadIdentityPoolAdmin"
+  member = "serviceAccount:key-rotation-test@terraformtrial-372802.iam.gserviceaccount.com"
 }
