@@ -20,7 +20,8 @@ resource "google_project_iam_custom_role" "terraform-ci" {
   description = "TerraformCIのCustomRole"
   stage       = "ALPHA"
   permissions = [
-    "storage.objects.list"
+    "storage.objects.list",
+    "resourcemanager.projects.getIamPolicy",
   ]
 }
 
